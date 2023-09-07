@@ -59,13 +59,13 @@ public final class Constants {
   /** CAN devices ID */
   public static class CAN_ID {
     /** Left Front Motor */
-    public static final int LEFT_FRONT = 1;
+    public static final int LEFT_FRONT = 4;
     /** Left Back Motor */
-    public static final int LEFT_BACK = 2;
+    public static final int LEFT_BACK = 3;
     /** Right Front Motor */
-    public static final int RIGHT_FRONT = 3;
+    public static final int RIGHT_FRONT = 1;
     /** Right Back Motor */
-    public static final int RIGHT_BACK = 4;
+    public static final int RIGHT_BACK = 2;
     /** Turret motor */
     public static final int TURRET = 5;
     /** Extender Motor */

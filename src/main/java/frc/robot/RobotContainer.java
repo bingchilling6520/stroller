@@ -11,11 +11,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ButtonBinding;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.Extender;
-import frc.robot.subsystems.Grabber;
-import frc.robot.subsystems.Turret;
 import static frc.robot.Constants.Controller.*;
 
 /**
@@ -29,15 +25,6 @@ import static frc.robot.Constants.Controller.*;
  */
 public class RobotContainer {
   // Subsystem instances
-
-  private final Extender m_Extender = new Extender();
-  private final Grabber m_Grabber = new Grabber();
-
-  // Buttons
-  private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK1, DRIVE_TO_SCORE);
-  private final JoystickButton extend1Button = new JoystickButton(JOYSTICK1, ExtendOut);
-  private final JoystickButton GrabButton = new JoystickButton(JOYSTICK0, GrabB);
-  private final JoystickButton ReleaseButton = new JoystickButton(JOYSTICK0, RealeaseB);
   // Commands
 
   // private Command endAll = new InstantCommand(()->
@@ -45,65 +32,7 @@ public class RobotContainer {
   // CommandScheduler.getInstance().cancelAll();
   // ((Drivebase)null).periodic();
   // });
-  private Command extendP1 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-2000);
-  },
-      () -> {
-        ;
-      }, m_Extender);
-  private Command extendP2 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-20000);
-  },
-      () -> {
-        //m_Extender.extendV(-0);
-        ;
-      }, m_Extender);
-  private Command extendP3 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-50000);
-  },
-      () -> {
-        //m_Extender.extendV(0);
-        ;
-      }, m_Extender);
-  private Command extendP4 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-90000);
-  },
-      () -> {
-        ;
-      }, m_Extender);
-  private Command extendV1 = new StartEndCommand(() -> {
-        m_Extender.extendV(-0.2);
-      },
-          () -> {
-            m_Extender.extendV(0);
-          }, m_Extender);
-  private Command extendV2 = new StartEndCommand(() -> {
-        m_Extender.extendV(0.2);
-      },
-          () -> {
-            m_Extender.extendV(0);
-            
-          }, m_Extender);
-
- 
-  private Command Grab = new StartEndCommand(() -> {
-    m_Grabber.grabV(0.5);
-  },
-      () -> {
-        m_Grabber.grabV(0);
-      }, m_Grabber);
-  private Command Release = new StartEndCommand(() -> {
-    m_Grabber.grabV(-0.5);
-  },
-      () -> {
-        m_Grabber.grabV(0);
-      }, m_Grabber);
-  /*
-   * The AprilTag ID in the Blue's substation is 4, while the AprilTag ID in the
-   * Red's is 5
-   * Get the current team color (set in DriverStation), then decide the correct
-   * AprilTag ID to aim
-   */
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -128,21 +57,14 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new JoystickButton(JOYSTICK1, LEFT).whileTrue(extendP1);
-    new JoystickButton(JOYSTICK1, DOWN).whileTrue(extendP2);
-    new JoystickButton(JOYSTICK1, RIGHT).whileTrue(extendP3);
-    new JoystickButton(JOYSTICK1, UP).whileTrue(extendP4);
-    new JoystickButton(JOYSTICK1, 5).whileTrue(extendV1);
-    new JoystickButton(JOYSTICK1, 6).whileTrue(extendV2);
-
-    GrabButton.whileTrue(Grab);
-    ReleaseButton.whileTrue(Release);
   }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
-   * @return the command to run in autonomous
+   * @return the command to run i 210xd
+   * ds53
+   * 22xx                                                                -+* *******************************************+n autonomous
    */
   public Command getAutonomousCommand() {
     return null;

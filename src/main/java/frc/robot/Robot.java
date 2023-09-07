@@ -9,13 +9,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ButtonBinding;
 import frc.robot.commands.DriveJoystick;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.Extender;
-import frc.robot.subsystems.Grabber;
-import frc.robot.subsystems.NavX;
-import frc.robot.subsystems.Turret;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,15 +24,9 @@ public class Robot extends TimedRobot {
 
   // Subsystem instances
   private Drivebase m_Drivebase = new Drivebase();
-  private NavX m_gyro = new NavX();
-  private Counter m_lidar = new Counter();
-  private final Extender m_Extender = new Extender();
-  private final Grabber m_Grabber = new Grabber();
-  private final Turret m_Turret = new Turret();
 
   // Commands
-  private DriveJoystick m_DriveJoystick = new DriveJoystick(m_Drivebase, m_gyro);
-  private ButtonBinding m_ButtonBinding = new ButtonBinding(m_Turret, m_Grabber);
+  private DriveJoystick m_DriveJoystick = new DriveJoystick(m_Drivebase);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -99,9 +88,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
-    // Reset Gyro
-    m_gyro.reset();
   }
 
   /** This function is called periodically during operator control. */
@@ -111,7 +97,6 @@ public class Robot extends TimedRobot {
 
     // Run commands repeatedly until teleop mode disabled
     m_DriveJoystick.execute();
-    m_ButtonBinding.execute();
   }
 
   @Override
