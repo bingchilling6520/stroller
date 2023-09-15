@@ -6,13 +6,14 @@ package frc.robot;
 
 import org.photonvision.PhotonCamera;
 
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -99,6 +100,10 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints X_CONSTRAINTS = new TrapezoidProfile.Constraints(3, 2);
     public static final TrapezoidProfile.Constraints Y_CONSTRAINTS = new TrapezoidProfile.Constraints(3, 2);
     public static final TrapezoidProfile.Constraints THETA_CONSTRAINTS = new TrapezoidProfile.Constraints(8, 8);
+    
+    //Drive speed slew rate limiter
+    public static final double linearMaxAcce = 0.5;
+    public static final double rotateMaxAcce = 0.5;
   }
 
   /** Controller button mapping */
@@ -143,6 +148,7 @@ public final class Constants {
     public static final int LowerB = 2;
     public static final int GrabB = 6;
     public static final int RealeaseB = 5;
+
 
   }
 

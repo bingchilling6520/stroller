@@ -7,12 +7,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import static frc.robot.Constants.Constraints.*;
 import static frc.robot.Constants.CAN_ID.*;
 import static frc.robot.Constants.Function.*;
 
@@ -23,9 +23,11 @@ public class Drivebase extends SubsystemBase {
   private WPI_TalonSRX leftBackMotor = new WPI_TalonSRX(LEFT_BACK);
   private WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(RIGHT_FRONT);
   private WPI_TalonSRX rightBackMotor = new WPI_TalonSRX(RIGHT_BACK);
-  private double xSpeed=0, ySpeed=0;
+  private SlewRateLimiter linearLimiter = new SlewRateLimiter(linearMaxAcce);
+  private SlewRateLimiter rotateLimiter = new SlewRateLimiter(rotateMaxAcce);
 
-  private DifferentialDrive tank;
+
+  private DifferentialDrive driveBase;
    
   //private ProfiledPIDController m_PIDController = new ProfiledPIDController(rP,rI,rD, new TrapezoidProfile.Constraints(rMaxSpeed, rMaxAccel));
 
@@ -53,7 +55,7 @@ public class Drivebase extends SubsystemBase {
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
     //mecanum = new MecanumDrive(leftFrontMotor, leftBackMotor, rightFrontMotor, rightBackMotor);
-    tank = new DifferentialDrive(rightFrontMotor, leftFrontMotor);
+    driveBase = new DifferentialDrive(rightFrontMotor, leftFrontMotor);
   }
 
   /**
@@ -67,22 +69,16 @@ public class Drivebase extends SubsystemBase {
    * @param zRotation The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is
    *     positive.
    */
-  public double lerp(double x, double y, double t)
+  public void drive(double rotateSpeed, double linearSpeed)
   {
-    return x*(1-t)+y*t;
-  }
-  public void drive(double x, double y, double rotation)
-  {
-    if (notNoise(x) || notNoise(y))
+    if (notNoise(rotateSpeed) || notNoise(linearSpeed))
     {
       
     } else {
-      x=0;
-      y=0;
+      rotateSpeed=0;
+      linearSpeed=0;
     }
-    xSpeed = lerp(xSpeed, x,1 );
-    ySpeed = lerp(ySpeed, y,.8 );
-    tank.arcadeDrive(ySpeed, xSpeed);
+    driveBase.arcadeDrive(linearLimiter.calculate(linearSpeed),rotateLimiter.calculate(rotateSpeed));
   }
 
   /**
